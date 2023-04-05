@@ -27,23 +27,27 @@ class MarkovMachine {
    * */
 
   getChains() {
-    const startWord = '';
-    const wordsAfter = [];
     const markovChain = new Map();
 
-    for (let i = 0; i < this.words.length; i++) {
-      startWord = this.words[i];
-      wordsAfter = [];
+    // 'The apple pie. The peach tree.'
 
-      if (this.words[i] === startWord) {
-        wordsAfter.push(this.words[i + 1]);
+    for (const word of this.words){
+      if (!markovChain.has(word)){
+        markovChain.set(word, []);
       }
-
-
-      markovChain.set(startWord, wordsAfter);
     }
 
+    for (let i = 0; i < this.words.length; i++) {
+      if(i === this.words.length - 1) {
+        let wordVal = markovChain.get(this.words[i]);
+        wordVal.push(null);
+      } else {
+        let wordVal = markovChain.get(this.words[i]);
+        wordVal.push(this.words[i + 1]);
+      }
+    }
 
+    return markovChain;
   }
 
 
@@ -59,7 +63,8 @@ class MarkovMachine {
   }
 }
 
-
+let m = new MarkovMachine('The apple pie. The peach tree.');
+console.log(m);
 
 
 
